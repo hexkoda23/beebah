@@ -277,6 +277,100 @@
     });
   })();
 
+  /* ────────── REELS ────────── */
+  (function reels() {
+    var figs = $$('.reel');
+    if (!figs.length) return;
+
+    var frames = [];
+
+    function pauseAll(except) {
+      frames.forEach(function (f) {
+        if (f.frame === except) return;
+        f.video.pause();
+        f.video.muted = true;
+        f.frame.classList.remove('is-playing', 'is-unmuted');
+      });
+    }
+
+    figs.forEach(function (fig) {
+      var frame = $('.reel__frame', fig);
+      var video = $('.reel__video', fig);
+      var btn   = $('.reel__play', fig);
+      if (!frame || !video) return;
+
+      frames.push({ frame: frame, video: video });
+
+      function play(withSound) {
+        pauseAll(frame);
+        frame.classList.add('is-playing');
+        video.muted = !withSound;
+        frame.classList.toggle('is-unmuted', !!withSound);
+
+        var p = video.play();
+        if (p && p.catch) {
+          p.catch(function () {
+            // Browsers can refuse to start playback with sound even on a click.
+            // Fall back to a muted play so the clip always moves, then let the
+            // viewer tap again to unmute.
+            video.muted = true;
+            frame.classList.remove('is-unmuted');
+            var p2 = video.play();
+            if (p2 && p2.catch) {
+              p2.catch(function () {
+                frame.classList.remove('is-playing');
+              });
+            }
+          });
+        }
+      }
+
+      function toggleSound() {
+        video.muted = !video.muted;
+        frame.classList.toggle('is-unmuted', !video.muted);
+      }
+
+      if (btn) {
+        btn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          play(true);
+        });
+      }
+
+      // Clicking the playing video toggles audio; if paused, resume.
+      video.addEventListener('click', function () {
+        if (video.paused) { play(true); return; }
+        toggleSound();
+      });
+
+      video.addEventListener('pause', function () {
+        frame.classList.remove('is-playing');
+      });
+
+      video.addEventListener('ended', function () {
+        frame.classList.remove('is-playing', 'is-unmuted');
+        video.muted = true;
+      });
+    });
+
+    // Pause any playing reel once it scrolls out of view.
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) return;
+          var v = $('.reel__video', e.target);
+          var f = $('.reel__frame', e.target);
+          if (v && !v.paused) {
+            v.pause();
+            v.muted = true;
+            if (f) f.classList.remove('is-playing', 'is-unmuted');
+          }
+        });
+      }, { threshold: 0.25 });
+      figs.forEach(function (fig) { io.observe(fig); });
+    }
+  })();
+
   /* ────────── LIGHTBOX ────────── */
   (function lightbox() {
     var box   = $('#lightbox');
@@ -316,7 +410,11 @@
     }
 
     items.forEach(function (fig, i) {
-      fig.addEventListener('click', function () { open(i); });
+      fig.addEventListener('click', function (e) {
+        // Let the certificate PDF link (and any other real link) behave normally.
+        if (e.target.closest('a')) return;
+        open(i);
+      });
     });
 
     $('#lbClose').addEventListener('click', close);
