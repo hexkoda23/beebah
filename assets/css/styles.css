@@ -33,6 +33,28 @@
   --maxw: 1360px;
 }
 
+/* ────────── LIGHT THEME VARIABLES ────────── */
+:root[data-theme="light"]{
+  --ink:        #FBF7F2;
+  --ink-2:      #F2EAE2;
+  --plum:       #F0E6F4;
+  --plum-soft:  #E6D8EF;
+
+  --violet:     #7B2FF7;
+  --magenta:    #C81E8A;
+  --lilac:      #6F35C8;
+  --gold:       #B07C22;
+  --gold-soft:  #8A6320;
+
+  --cream:      #1C1524;
+  --mute:       #5A5066;
+  --mute-2:     #8C8196;
+  --hair:       rgba(28,21,36,.12);
+
+  --grad:       linear-gradient(120deg, var(--violet), var(--magenta) 55%, var(--gold));
+  --grad-soft:  linear-gradient(120deg, rgba(123,47,247,.10), rgba(200,30,138,.09));
+}
+
 *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
 
 html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
@@ -214,6 +236,26 @@ body.has-cursor .cursor.is-active{
 .nav__burger span:nth-child(2){ top:20px; }
 .nav.menu-open .nav__burger span:nth-child(1){ transform:translateY(3.5px) rotate(45deg); }
 .nav.menu-open .nav__burger span:nth-child(2){ transform:translateY(-3.5px) rotate(-45deg); }
+
+/* ────────── THEME TOGGLE ────────── */
+.nav__theme{
+  position:relative; width:38px; height:38px; flex:0 0 auto;
+  display:grid; place-items:center; border-radius:50%;
+  border:1px solid var(--hair); color:var(--cream);
+  background:transparent;
+  transition:border-color .35s, transform .35s var(--ease), color .35s;
+}
+.nav__theme:hover{ border-color:var(--lilac); transform:rotate(14deg); }
+.nav__theme svg{
+  position:absolute; width:18px; height:18px;
+  fill:none; stroke:currentColor; stroke-width:1.7;
+  stroke-linecap:round; stroke-linejoin:round;
+  transition:opacity .35s ease, transform .45s var(--ease);
+}
+.nav__theme .icon-moon{ opacity:1; transform:rotate(0) scale(1); }
+.nav__theme .icon-sun{ opacity:0; transform:rotate(-90deg) scale(.4); }
+:root[data-theme="light"] .nav__theme .icon-moon{ opacity:0; transform:rotate(90deg) scale(.4); }
+:root[data-theme="light"] .nav__theme .icon-sun{ opacity:1; transform:rotate(0) scale(1); }
 
 /* ══════════ HERO ══════════ */
 .hero{
@@ -682,3 +724,52 @@ a.crow:hover .crow__go{ transform:translateX(7px); }
   .work__sticky{ position:static; height:auto; }
   .work__rail{ transform:none !important; overflow-x:auto; width:100%; }
 }
+
+/* ══════════ LIGHT THEME — COMPONENT OVERRIDES ══════════ */
+:root[data-theme="light"] .noise{ opacity:.03; }
+:root[data-theme="light"] .scrollbar{ background:rgba(0,0,0,.06); }
+:root[data-theme="light"] .cursor{ border-color:rgba(0,0,0,.22); }
+
+/* hero reads light in light mode */
+:root[data-theme="light"] .hero__veil{
+  background:
+    radial-gradient(120% 85% at 78% 22%, rgba(251,247,242,.35), rgba(251,247,242,.7) 55%, var(--ink) 92%),
+    linear-gradient(to top, var(--ink) 2%, rgba(251,247,242,.55) 38%, rgba(251,247,242,.4) 72%, rgba(251,247,242,.25));
+}
+:root[data-theme="light"] .hero__sub{ color:var(--cream); }
+:root[data-theme="light"] .line--outline{
+  color:transparent;
+  -webkit-text-stroke:1px rgba(28,21,36,.45);
+}
+
+/* page chrome */
+:root[data-theme="light"] .marquee{ background:var(--ink-2); }
+:root[data-theme="light"] .marquee span{ color:var(--cream); }
+:root[data-theme="light"] .lead{ color:var(--cream); }
+:root[data-theme="light"] .about__facts span{ color:var(--cream); }
+
+:root[data-theme="light"] .ethos__card{
+  background:linear-gradient(160deg, rgba(240,230,244,.92), rgba(242,234,226,.88));
+  border-color:var(--hair);
+}
+:root[data-theme="light"] .card{ background:var(--ink-2); border-color:var(--hair); }
+:root[data-theme="light"] .card:hover{ background:var(--plum-soft); border-color:rgba(111,53,200,.34); }
+:root[data-theme="light"] .cred{ background:var(--ink-2); border-color:var(--hair); }
+:root[data-theme="light"] .cred:hover{ border-color:rgba(176,124,34,.5); }
+:root[data-theme="light"] .about__badge{ background:var(--plum); border-color:var(--hair); }
+:root[data-theme="light"] .foot{ background:var(--ink-2); }
+
+/* stuck nav bar (light) */
+:root[data-theme="light"] .nav.is-stuck{
+  background:rgba(251,247,242,.82);
+  border-bottom:1px solid var(--hair);
+}
+
+/* photo-anchored overlays keep light text in both themes */
+:root[data-theme="light"] .shot figcaption b,
+:root[data-theme="light"] .reel__sound,
+:root[data-theme="light"] .lightbox__fig figcaption,
+:root[data-theme="light"] .lightbox__close,
+:root[data-theme="light"] .lightbox__nav{ color:#E6DEEF; }
+:root[data-theme="light"] .lightbox__close:hover,
+:root[data-theme="light"] .lightbox__nav:hover{ color:#fff; }

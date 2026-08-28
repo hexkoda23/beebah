@@ -430,4 +430,25 @@
     });
   })();
 
+  /* ────────── THEME TOGGLE (dark / light) ────────── */
+  (function theme() {
+    var root = document.documentElement;
+    var btn  = $('#themeToggle');
+    if (!btn) return;
+
+    function sync() {
+      var light = root.getAttribute('data-theme') === 'light';
+      btn.setAttribute('aria-pressed', String(light));
+      btn.setAttribute('aria-label', light ? 'Switch to dark theme' : 'Switch to light theme');
+    }
+    sync();
+
+    btn.addEventListener('click', function () {
+      var light = root.getAttribute('data-theme') !== 'light';
+      root.setAttribute('data-theme', light ? 'light' : 'dark');
+      try { localStorage.setItem('bb-theme', light ? 'light' : 'dark'); } catch (e) {}
+      sync();
+    });
+  })();
+
 })();

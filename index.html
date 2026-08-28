@@ -5,18 +5,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Laid by Beebah — Melted Installs, Revamps & Premium Hair | Lagos</title>
 <meta name="description" content="Laid by Beebah — professional wig installations, revamps, styling and premium quality hair by Habibat Sosanya. Melted hairlines, flawless finishes. Lagos Mainland, Nigeria." />
-<meta name="theme-color" content="#08060B" />
+<meta name="theme-color" content="#7B2FF7" />
 
 <meta property="og:title" content="Laid by Beebah — The Art of the Melted Install" />
 <meta property="og:description" content="Professional wig installations, revamps and premium hair by Habibat Sosanya. Lagos Mainland." />
 <meta property="og:type" content="website" />
+<link rel="canonical" href="https://www.shopfrombeebah.hair/" />
+<meta property="og:url" content="https://www.shopfrombeebah.hair/" />
 <meta property="og:image" content="images/work/sleek-middle-part.jpg" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="assets/css/styles.css" />
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23120a1c'/><text y='68' x='50' text-anchor='middle' font-size='54' font-family='Georgia,serif' fill='%23e0a3ff'>B</text></svg>" />
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="favicon.svg" />
+
+<script>
+  /* set theme before first paint to avoid a flash of the wrong theme */
+  (function () {
+    try {
+      var t = localStorage.getItem('bb-theme');
+      if (!t) t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  })();
+</script>
 </head>
 <body>
 
@@ -60,6 +74,10 @@
     <a href="#credentials">Credentials</a>
     <a href="#contact" class="nav__cta" data-magnetic>Book a Slot</a>
   </nav>
+  <button class="nav__theme" id="themeToggle" type="button" aria-label="Toggle light / dark theme" aria-pressed="false" title="Toggle theme">
+    <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.6M12 19.4V22M2 12h2.6M19.4 12H22M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M19.4 4.6l-1.8 1.8M6.4 17.6l-1.8 1.8"/></svg>
+  </button>
   <button class="nav__burger" id="burger" aria-label="Open menu" aria-expanded="false">
     <span></span><span></span>
   </button>
